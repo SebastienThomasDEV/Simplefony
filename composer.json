@@ -1,0 +1,15 @@
+{
+  "name": "mvc/framework",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Mvc\\Framework\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "vlucas/phpdotenv": "^5.6",
+    "symfony/var-dumper": "^6.4",
+    "tedivm/jshrink": "^1.7"
+  }
+}
