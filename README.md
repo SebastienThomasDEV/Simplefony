@@ -1,2 +1,2 @@
-# Mvc_PHP_Framework
+# Un petit framework MVC en prenant exemple sur symfony
  
