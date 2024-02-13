@@ -12,7 +12,6 @@ class AbstractController
      * Render a view
      *
      * @param string $view
-     * @param string $page_title
      * @param array $vars
      * @return void
      */

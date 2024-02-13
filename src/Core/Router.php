@@ -25,7 +25,7 @@ class Router
         while ($file_path = readdir($dir)) {
             if ($file_path !== '.' && $file_path !== '..') {
                 $file_path = str_replace('.php', '', $file_path);
-                $file_path = 'Mvc\Framework\Controller\\' . $file_path;
+                $file_path = 'Mvc\\Framework\\Controller\\' . $file_path;
                 try {
                     $class = new \ReflectionClass($file_path);
                     $methods = $class->getMethods();
@@ -55,6 +55,12 @@ class Router
 
     private static function load(string $urn): void
     {
+
+        $test = explode('\\', dirname(__DIR__, 2));
+        $test = end($test);
+        $test = strtolower($test);
+        $test = str_replace(' ', '', $test);
+        $urn = str_replace('/'.$test, '', $urn);
         $routeFound = null;
         foreach (self::$routes as $route) {
             if ($route->getPath() === $urn) {
@@ -62,10 +68,9 @@ class Router
             }
         }
 
+
         if (!$routeFound) {
-            if ($_ENV['APP_ENV'] === 'PROD') {
-                header('Location: ./');
-            }
+            echo '404';
         } else {
             if (class_exists($routeFound->getController())) {
                 $controller = new \ReflectionClass($routeFound->getController());

@@ -8,10 +8,39 @@ abstract class Parser
     {
         $document = self::parseAssets($document);
         $document = self::parseViews($document);
-        $document = self::parseVars($document, $vars);
-        return $document;
+        $document = self::parseIfOperation($document, $vars);
+        $document = self::parseForOperation($document, $vars);
+        return self::parseVars($document, $vars);
     }
 
+    static private function parseForOperation(string $document, array $vars): string
+    {
+        // need to match this pattern
+        //<div @for="array as item">
+        //    <div>{{ item }}</div>
+        // </div>
+        // even if line breaks are present
+
+        return preg_replace_callback('/<([a-zA-Z0-9_]+)\s*@for="([a-zA-Z0-9_]+)\s+as\s+([a-zA-Z0-9_]+)"\s*>(.*?)<\/\1>/', function ($matches) use ($vars) {
+            dd($matches);
+            $html = '';
+            foreach ($vars[$matches[2]] as $item) {
+                $html .= str_replace($matches[3], $item, $matches[4]);
+            }
+            return $html;
+        }, $document);
+    }
+    static private function parseIfOperation(string $document, array $vars): string
+    {
+        // need to match <div @if="var"></div> and any type html tag
+        return preg_replace_callback('/<([a-zA-Z0-9_]+)\s*@if="([a-zA-Z0-9_]+)"\s*>(.*?)<\/\1>/', function ($matches) use ($vars) {
+            if ($vars[$matches[2]]) {
+                return str_replace('@if="'.$matches[2].'"', '', $matches[0]);
+            } else {
+                return '';
+            }
+        }, $document);
+    }
     static private function parseVars(string $document, array $vars): string
     {
         return preg_replace_callback('/{{\s*([a-zA-Z0-9_]+)\s*}}/', function ($matches) use ($vars) {
@@ -39,7 +68,7 @@ abstract class Parser
                     file_put_contents(__DIR__ . '/../../../public/' . $matches[1] . '.min.js', $minifiedCode);
                 }
             }
-            return '<script src="./public/' . $matches[1] . '.min.js" defer></script>';
+            return '<script src="./public/' . $matches[1] . '.min.js" type="module"></script>';
         }, $document);
     }
 

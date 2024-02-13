@@ -10,7 +10,14 @@
     </head>
     <body>
         <router></router>
-        <div id="test">ezq</div>
+        <div @if="condition">test</div>
+        <div @for="array as item">
+            <div>{{ item }}</div>
+        </div>
+
+<!--        <div @for="array as key,value">-->
+<!--            <div>{{ key }} - {{ value }}</div>-->
+<!--        </div>-->
     </body>
 
 </html>
