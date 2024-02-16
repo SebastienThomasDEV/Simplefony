@@ -6,16 +6,14 @@ class DependencyInjectionContainer
 {
     private static array $services = [];
 
-    public function __invoke(): void
+    public static function resolve(array $parameters): array
     {
-        // TODO: Implement __invoke() method.
-        self::$services = [
-            'request' => fn() => new Utils\Request(),
-        ];
+        foreach ($parameters as $key => $file_path) {
+            $class = new \ReflectionClass($file_path);
+            $class = $class->newInstance();
+            self::$services[] = $class;
+        }
+        return self::$services;
     }
 
-    public static function get(string $service): mixed
-    {
-        return self::$services[$service];
-    }
 }

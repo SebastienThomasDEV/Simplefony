@@ -55,5 +55,22 @@ class Endpoint
         $this->requestMethod = $requestMethod;
     }
 
+    public final function setParameter(string $parameter, string $value) {
+        $this->parameters[$parameter] = $value;
+    }
+
+    public final function getParameter(string $parameter) {
+        return $this->parameters[$parameter];
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+
 
 }

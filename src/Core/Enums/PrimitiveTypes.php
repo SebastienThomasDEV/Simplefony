@@ -12,8 +12,6 @@ enum PrimitiveTypes
     case OBJECT;
     case NULL;
 
-    case UNKNOWN;
-
     public static function isPrimitiveFromString(string $type): bool
     {
         return match ($type) {

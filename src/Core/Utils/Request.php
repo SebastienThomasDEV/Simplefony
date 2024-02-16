@@ -7,29 +7,19 @@ use Mvc\Framework\Core\Utils;
 class Request extends Utils
 {
 
-    // create a new request like $_GET, $_POST, $_FILES, $_COOKIE, $_SESSION, $_SERVER
     public array $get;
     public array $post;
-    public array $files;
-    public array $cookie;
-    public array $session;
     public array $server;
 
 
     public function __construct()
     {
-        $this->init();
-    }
-
-    public function init(): void
-    {
+        $this->detectRequestBody();
         $this->get = $_GET;
-        $this->post = $_POST;
-        $this->files = $_FILES;
-        $this->cookie = $_COOKIE;
-        $this->session = $_SESSION;
+        $this->post = json_decode(file_get_contents('php://input'), true);
         $this->server = $_SERVER;
     }
+
     public static function createFromGlobals(): self
     {
         return new self();
@@ -45,25 +35,16 @@ class Request extends Utils
         return $this->post[$key] ?? $default;
     }
 
-    public function files(string $key, mixed $default = null): mixed
-    {
-        return $this->files[$key] ?? $default;
+    private function detectRequestBody() {
+        $rawInput = fopen('php://input', 'r');
+        $tempStream = fopen('php://temp', 'r+');
+        stream_copy_to_stream($rawInput, $tempStream);
+        rewind($tempStream);
+
+        return $tempStream;
     }
 
-    public function cookie(string $key, mixed $default = null): mixed
-    {
-        return $this->cookie[$key] ?? $default;
-    }
 
-    public function session(string $key, mixed $default = null): mixed
-    {
-        return $this->session[$key] ?? $default;
-    }
-
-    public function server(string $key, mixed $default = null): mixed
-    {
-        return $this->server[$key] ?? $default;
-    }
 
 
 }
