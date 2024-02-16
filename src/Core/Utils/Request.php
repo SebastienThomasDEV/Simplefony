@@ -16,7 +16,7 @@ class Request extends Utils
     {
         $this->detectRequestBody();
         $this->get = $_GET;
-        $this->post = json_decode(file_get_contents('php://input'), true);
+        $this->post = json_decode(file_get_contents('php://input'), true) ?? $_POST;
         $this->server = $_SERVER;
     }
 
