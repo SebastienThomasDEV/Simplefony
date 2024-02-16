@@ -6,21 +6,54 @@ namespace Mvc\Framework\Core\Attributes;
 class Endpoint
 {
 
-        public function __construct(private readonly string $path, private readonly string $name){}
+    private string $method;
+    private string $requestMethod;
+    private string $controller;
 
-        public function getPath(): string
-        {
-            return $this->path;
-        }
+    private array $parameters = [];
 
-        public function getName(): string
-        {
-            return $this->name;
-        }
+    public function __construct(private readonly string $path, private readonly string $name){}
 
-        public function getUri(): string
-        {
-            return $this->uri;
-        }
+    public final function getPath(): string
+    {
+        return $this->path;
+    }
+
+    public final function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    public final function getController(): string
+    {
+        return $this->controller;
+    }
+
+    public final function setMethod(string $method): void
+    {
+        $this->method = $method;
+    }
+
+    public final function setController(string $controller): void
+    {
+        $this->controller = $controller;
+    }
+
+    public final function getName(): string
+    {
+        return $this->name;
+    }
+
+
+    public final function getRequestMethod(): string
+    {
+        return $this->requestMethod;
+    }
+
+    public final function setRequestMethod(string $requestMethod): void
+    {
+        $this->requestMethod = $requestMethod;
+    }
+
 
 }

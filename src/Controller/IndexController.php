@@ -3,23 +3,20 @@
 namespace Mvc\Framework\Controller;
 
 use Mvc\Framework\Core\AbstractController;
-use Mvc\Framework\Core\Attributes\Route;
+use Mvc\Framework\Core\Attributes\Endpoint;
+use Mvc\Framework\Core\Utils\Request;
 
 class IndexController extends AbstractController
 {
-    #[Route('/', 'index')]
-    public function showIndex()
+    #[Endpoint('/', 'index')]
+    public final function index(Request $request): void
     {
-        $this->render('index/index', ['title' => 'Poo', 'condition' => true]);
+        dd($request);
+        $this->send([
+            'message' => 'Hello World'
+        ]);
     }
 
-
-    #[Route('/about', 'about')]
-    public function showAbout()
-    {
-
-        $this->render('index/about', ['title' => 'About']);
-    }
 
 
 

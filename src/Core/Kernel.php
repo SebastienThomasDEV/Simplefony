@@ -13,11 +13,7 @@ class Kernel
     private function init(): void
     {
         Dotenv::createImmutable(__DIR__ . '/../../')->load();
-        if ($_ENV['TYPE'] === 'STATIC') {
-            Router::dispatch();
-        } else if ($_ENV['TYPE'] === 'API') {
-            echo 'API';
-        }
+        Router::dispatch();
     }
 
 }
