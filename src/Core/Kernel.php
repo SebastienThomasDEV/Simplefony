@@ -13,7 +13,7 @@ class Kernel
     private function init(): void
     {
         Dotenv::createImmutable(__DIR__ . '/../../')->load();
-        Router::dispatch();
+        ApiRouter::dispatch();
     }
 
 }

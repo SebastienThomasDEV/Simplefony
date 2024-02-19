@@ -5,7 +5,7 @@ namespace Poo\Project\Core\Orm;
 use PDO;
 use Poo\Project\Config\Config;
 
-class Model extends PDO
+class Model
 {
     private static $instance = null;
 

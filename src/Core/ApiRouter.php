@@ -4,7 +4,7 @@ namespace Mvc\Framework\Core;
 
 use Mvc\Framework\Core\Enums\PrimitiveTypes;
 
-class Router
+class ApiRouter
 {
 
     private static array $endpoints = [];
@@ -25,11 +25,11 @@ class Router
 
     private static function register(): void
     {
-        $dir = opendir(__DIR__ . '/../../src/Controller');
+        $dir = opendir(__DIR__ . '/../../src/App/Controller');
         while ($file_path = readdir($dir)) {
             if ($file_path !== '.' && $file_path !== '..') {
                 $file_path = str_replace('.php', '', $file_path);
-                $file_path = 'Mvc\\Framework\\Controller\\' . $file_path;
+                $file_path = 'Mvc\\Framework\\App\\Controller\\' . $file_path;
                 try {
                     $class = new \ReflectionClass($file_path);
                     $methods = $class->getMethods();
@@ -42,7 +42,6 @@ class Router
                                 $endpoint->setController($file_path);
                                 $endpoint->setMethod($method->getName());
                                 $endpoint->setRequestMethod($_SERVER['REQUEST_METHOD']);
-                                $endpoint->setRequestMethod($endpoint->getRequestMethod());
                                 foreach ($parameters as $parameter) {
                                     if (!PrimitiveTypes::isPrimitiveFromString($parameter->getType())) {
                                         $parameter_name = explode('\\', $parameter->getType());
@@ -93,9 +92,7 @@ class Router
                     $controller = $controller->newInstance();
                     if (method_exists($controller, $endpointFound->getMethod())) {
                         $method = $endpointFound->getMethod();
-                        // regarder ici si la dependance est un objet ou un type primitif
-                        // voir https://www.php.net/manual/fr/functions.arguments.php pour l'ajout de parametre dynamic*
-                        $services = DependencyInjectionContainer::resolve($endpointFound->getParameters());
+                        $services = DependencyResolver::resolve($endpointFound->getParameters());
                         $controller->$method(...$services);
                     }
                 } catch (\ReflectionException $e) {

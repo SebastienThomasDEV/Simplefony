@@ -1,6 +1,6 @@
 <?php
 
-namespace Mvc\Framework\Controller;
+namespace Mvc\Framework\App\Controller;
 
 use Mvc\Framework\Core\AbstractController;
 use Mvc\Framework\Core\Attributes\Endpoint;

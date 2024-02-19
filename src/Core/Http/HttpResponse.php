@@ -16,17 +16,17 @@ abstract class HttpResponse
         echo $this->content;
     }
 
-    public function setContent(string $content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
 
-    public function setStatusCode(int $status)
+    public function setStatusCode(int $status): void
     {
         $this->status = $status;
     }
 
-    public function setHeader(string $name, string $value)
+    public function setHeader(string $name, string $value): void
     {
         $this->headers[$name] = $value;
     }

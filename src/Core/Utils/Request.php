@@ -2,14 +2,11 @@
 
 namespace Mvc\Framework\Core\Utils;
 
-use Mvc\Framework\Core\Utils;
-
 class Request extends Utils
 {
 
     public array $get;
     public array $post;
-    public array $server;
 
 
     public function __construct()
@@ -17,7 +14,6 @@ class Request extends Utils
         $this->detectRequestBody();
         $this->get = $_GET;
         $this->post = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-        $this->server = $_SERVER;
     }
 
     public static function createFromGlobals(): self
@@ -35,13 +31,13 @@ class Request extends Utils
         return $this->post[$key] ?? $default;
     }
 
-    private function detectRequestBody() {
+    private function detectRequestBody(): void
+    {
         $rawInput = fopen('php://input', 'r');
         $tempStream = fopen('php://temp', 'r+');
         stream_copy_to_stream($rawInput, $tempStream);
         rewind($tempStream);
 
-        return $tempStream;
     }
 
 
