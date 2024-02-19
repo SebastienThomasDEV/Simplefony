@@ -1,6 +1,6 @@
 <?php
 
-namespace Mvc\Framework\Core\Model;
+namespace Mvc\Framework\Kernel\Model;
 
 interface UserInterface
 {

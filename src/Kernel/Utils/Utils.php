@@ -1,16 +1,9 @@
 <?php
 
-namespace Mvc\Framework\Core\Enums;
+namespace Mvc\Framework\Kernel\Utils;
 
-enum PrimitiveTypes
+abstract class Utils
 {
-    case STRING;
-    case INT;
-    case FLOAT;
-    case BOOL;
-    case ARRAY;
-    case OBJECT;
-    case NULL;
 
     public static function isPrimitiveFromString(string $type): bool
     {
@@ -19,5 +12,4 @@ enum PrimitiveTypes
             default => false,
         };
     }
-
 }

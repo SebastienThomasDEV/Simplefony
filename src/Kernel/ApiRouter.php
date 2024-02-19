@@ -1,8 +1,9 @@
 <?php
 
-namespace Mvc\Framework\Core;
+namespace Mvc\Framework\Kernel;
 
-use Mvc\Framework\Core\Enums\PrimitiveTypes;
+use Mvc\Framework\Kernel\Enums\PrimitiveTypes;
+use Mvc\Framework\Kernel\Utils\Utils;
 
 class ApiRouter
 {
@@ -37,16 +38,14 @@ class ApiRouter
                         $attributes = $method->getAttributes();
                         $parameters = $method->getParameters();
                         foreach ($attributes as $attribute) {
-                            if ($attribute->getName() === 'Mvc\\Framework\\Core\\Attributes\\Endpoint') {
+                            if ($attribute->getName() === 'Mvc\\Framework\\Kernel\\Attributes\\Endpoint') {
                                 $endpoint = $attribute->newInstance();
                                 $endpoint->setController($file_path);
                                 $endpoint->setMethod($method->getName());
                                 $endpoint->setRequestMethod($_SERVER['REQUEST_METHOD']);
                                 foreach ($parameters as $parameter) {
-                                    if (!PrimitiveTypes::isPrimitiveFromString($parameter->getType())) {
-                                        $parameter_name = explode('\\', $parameter->getType());
-                                        $parameter_name = strtolower(end($parameter_name));
-                                        $endpoint->setParameter($parameter_name, $parameter->getType());
+                                    if (!Utils::isPrimitiveFromString($parameter->getType())) {
+                                        $endpoint->setParameter($parameter->getName(), $parameter->getType());
                                     }
                                 }
 
@@ -65,11 +64,11 @@ class ApiRouter
 
     private static function load(string $urn): void
     {
-
+        // dégeu
         $test = explode('\\', dirname(__DIR__, 2));
         $test = end($test);
         $test = str_replace(' ', '', $test);
-        $urn = str_replace('/' . $test, '', $urn);
+        $urn = str_replace('/' . strtolower($test), '', $urn);
         $params = explode('?', $urn);
         if (count($params) > 1) {
             $urn = $params[0];

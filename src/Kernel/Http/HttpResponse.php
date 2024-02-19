@@ -1,6 +1,6 @@
 <?php
 
-namespace Mvc\Framework\Core\Http;
+namespace Mvc\Framework\Kernel\Http;
 
 abstract class HttpResponse
 {

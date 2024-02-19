@@ -1,19 +1,13 @@
 <?php
 
-namespace Mvc\Framework\Core;
+namespace Mvc\Framework\Kernel;
 
 use Dotenv\Dotenv;
 
 class Kernel
 {
     public function __construct() {
-        $this->init();
-    }
-
-    private function init(): void
-    {
         Dotenv::createImmutable(__DIR__ . '/../../')->load();
         ApiRouter::dispatch();
     }
-
 }

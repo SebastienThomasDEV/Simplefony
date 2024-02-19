@@ -1,6 +1,6 @@
 <?php
 
-namespace Mvc\Framework\Core\Attributes;
+namespace Mvc\Framework\Kernel\Attributes;
 
 #[\Attribute(\Attribute::TARGET_METHOD | \Attribute::TARGET_CLASS)]
 class Endpoint
@@ -55,7 +55,7 @@ class Endpoint
         $this->requestMethod = $requestMethod;
     }
 
-    public final function setParameter(string $parameter, string $value) {
+    public final function setParameter(string $parameter, string $value)  {
         $this->parameters[$parameter] = $value;
     }
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Mvc\Framework\Core;
-use Mvc\Framework\Core\Http\JsonResponse;
-use Mvc\Framework\Core\Http\Response;
+namespace Mvc\Framework\Kernel;
+use Mvc\Framework\Kernel\Http\JsonResponse;
+use Mvc\Framework\Kernel\Http\Response;
 
 class AbstractController
 {
     /**
-     * send a JSON response
+     * send a JSON response to the client with the given data as an array
      *
      * @param array $vars
      * @return void

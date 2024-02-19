@@ -1,8 +1,8 @@
 <?php
 
-namespace Mvc\Framework\Core\Utils;
+namespace Mvc\Framework\Kernel\Utils;
 
-class Request extends Utils
+class Request
 {
 
     public array $get;
@@ -21,12 +21,12 @@ class Request extends Utils
         return new self();
     }
 
-    public function get(string $key, mixed $default = null): mixed
+    public final function get(string $key, mixed $default = null): mixed
     {
         return $this->get[$key] ?? $default;
     }
 
-    public function post(string $key, mixed $default = null): mixed
+    public final function post(string $key, mixed $default = null): mixed
     {
         return $this->post[$key] ?? $default;
     }
@@ -37,7 +37,6 @@ class Request extends Utils
         $tempStream = fopen('php://temp', 'r+');
         stream_copy_to_stream($rawInput, $tempStream);
         rewind($tempStream);
-
     }
 
 

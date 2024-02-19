@@ -2,7 +2,7 @@
 
 namespace Mvc\Framework\App\Entity;
 
-use Mvc\Framework\Core\Model\UserInterface;
+use Mvc\Framework\Kernel\Model\UserInterface;
 
 class User implements UserInterface
 {
@@ -12,10 +12,7 @@ class User implements UserInterface
     private string $email;
     private array $roles;
 
-    public function __construct()
-    {
-
-    }
+    public function __construct(){}
 
     public function getId(): int
     {

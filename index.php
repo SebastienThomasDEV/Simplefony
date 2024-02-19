@@ -1,6 +1,7 @@
 <?php
 include_once('vendor/autoload.php');
-use Mvc\Framework\Core\Kernel;
+use Mvc\Framework\Kernel\Kernel;
+
 
 
 try {

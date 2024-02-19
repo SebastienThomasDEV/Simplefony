@@ -1,6 +1,6 @@
 <?php
 
-namespace Mvc\Framework\Core;
+namespace Mvc\Framework\Kernel;
 
 class DependencyResolver
 {
