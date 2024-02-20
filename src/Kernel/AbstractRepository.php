@@ -15,7 +15,7 @@ class AbstractRepository
         $this->entity = strtolower(substr($repositoryName, 0, strpos($repositoryName, 'Repository')));
     }
 
-    public final function save(mixed $entity)
+    public final function save(mixed $entity) : bool
     {
         $class = new \ReflectionClass(get_class($entity));
         $properties = $class->getProperties();
@@ -31,7 +31,7 @@ class AbstractRepository
         $columns = implode(',', $columns);
         $values = implode("','", $values);
         $sql = "INSERT INTO $table ($columns) VALUES ('$values')";
-        return Model::getInstance()->query($sql);
+        return (bool) Model::getInstance()->query($sql);
     }
 
     public final function findAll(): array

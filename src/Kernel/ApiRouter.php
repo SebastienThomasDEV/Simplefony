@@ -42,7 +42,7 @@ class ApiRouter
                                 $endpoint = $attribute->newInstance();
                                 $endpoint->setController($file_path);
                                 $endpoint->setMethod($method->getName());
-                                $endpoint->setRequestMethod($_SERVER['REQUEST_METHOD']);
+                                
                                 foreach ($parameters as $parameter) {
                                     if (!Utils::isPrimitiveFromString($parameter->getType())) {
                                         $endpoint->setParameter($parameter->getName(), $parameter->getType());
@@ -78,12 +78,18 @@ class ApiRouter
         }
         $endpointFound = null;
         foreach (self::$endpoints as $endpoint) {
-            if ($endpoint->getPath() === $urn) {
-                $endpointFound = $endpoint;
+            if ($endpoint->getPath() === $urn ) {
+                if ($endpoint->getRequestMethod() === $_SERVER['REQUEST_METHOD']) {
+                    $endpointFound = $endpoint;
+                } else {
+                    echo 'method not allowed';
+                    die();
+                }
             }
         }
         if (!$endpointFound) {
             echo 'endpoint not found';
+            die();
         } else {
             if (class_exists($endpointFound->getController())) {
                 $controller = new \ReflectionClass($endpointFound->getController());
@@ -96,6 +102,7 @@ class ApiRouter
                     }
                 } catch (\ReflectionException $e) {
                     echo $e->getMessage();
+                    die();
                 }
             }
         }

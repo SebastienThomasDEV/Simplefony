@@ -13,7 +13,7 @@ class Request
     {
         $this->detectRequestBody();
         $this->get = $_GET;
-        $this->post = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+        $this->post = json_decode(file_get_contents('php://input'), true) ?: [];
     }
 
     public static function createFromGlobals(): self
@@ -21,14 +21,24 @@ class Request
         return new self();
     }
 
-    public final function get(string $key, mixed $default = null): mixed
+    public final function retrieveGetValue(string $key, mixed $default = null): mixed
     {
         return $this->get[$key] ?? $default;
     }
 
-    public final function post(string $key, mixed $default = null): mixed
+    public final function retrievePostValue(string $key, mixed $default = null): mixed
     {
         return $this->post[$key] ?? $default;
+    }
+
+    public final function retrieveAllGetValues(): array
+    {
+        return $this->get;
+    }
+
+    public final function retrieveAllPostValues(): array
+    {
+        return $this->post;
     }
 
     private function detectRequestBody(): void

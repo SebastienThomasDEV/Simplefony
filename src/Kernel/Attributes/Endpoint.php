@@ -7,12 +7,15 @@ class Endpoint
 {
 
     private string $method;
-    private string $requestMethod;
     private string $controller;
 
     private array $parameters = [];
 
-    public function __construct(private readonly string $path, private readonly string $name){}
+    public function __construct(
+        private readonly string $path,
+        private readonly string $name,
+        private  string $requestMethod =  'GET'
+    ){}
 
     public final function getPath(): string
     {
@@ -55,18 +58,18 @@ class Endpoint
         $this->requestMethod = $requestMethod;
     }
 
-    public final function setParameter(string $parameter, string $value)  {
+    public final function setParameter(string $parameter, string $value): void{
         $this->parameters[$parameter] = $value;
     }
 
-    public final function getParameter(string $parameter) {
+    public final function getParameter(string $parameter): string {
         return $this->parameters[$parameter];
     }
 
     /**
      * @return array
      */
-    public function getParameters(): array
+    public final function getParameters(): array
     {
         return $this->parameters;
     }
