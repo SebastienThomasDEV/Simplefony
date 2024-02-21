@@ -70,6 +70,7 @@ class ApiRouter
         } else {
             $params = null;
         }
+        
 
         $endpointFound = null;
         foreach (self::$endpoints as $endpoint) {
