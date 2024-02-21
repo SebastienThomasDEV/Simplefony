@@ -10,6 +10,4 @@ class ProductRepository extends AbstractRepository
     {
         parent::__construct();
     }
-
-
 }

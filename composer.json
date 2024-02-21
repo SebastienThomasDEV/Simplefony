@@ -11,6 +11,7 @@
     "vlucas/phpdotenv": "^5.6",
     "symfony/var-dumper": "^6.4",
     "tedivm/jshrink": "^1.7",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "firebase/php-jwt": "^6.10"
   }
 }

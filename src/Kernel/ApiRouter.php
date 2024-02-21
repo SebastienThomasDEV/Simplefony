@@ -2,7 +2,7 @@
 
 namespace Mvc\Framework\Kernel;
 
-use Mvc\Framework\Kernel\Enums\PrimitiveTypes;
+
 use Mvc\Framework\Kernel\Utils\Utils;
 
 class ApiRouter
@@ -10,15 +10,10 @@ class ApiRouter
 
     private static array $endpoints = [];
 
-    public static function dispatch(): void
+    public static function searchForRoutes(): void
     {
 
-        // TODO: Need to change hardcoded root directory
-        if (!empty($_SERVER)) {
-            $urn = str_replace($_ENV['ROOTDIR'], '', $_SERVER['REQUEST_URI']);
-        } else {
-            $urn = '/';
-        }
+        $urn = $_SERVER["REQUEST_URI"];
         self::register();
         self::load($urn);
     }
@@ -26,7 +21,9 @@ class ApiRouter
 
     private static function register(): void
     {
+        // j'ouvre le dossier Controller de mon application
         $dir = opendir(__DIR__ . '/../../src/App/Controller');
+        // je fait une boucle tant que pour lire les fichers qu'il contient
         while ($file_path = readdir($dir)) {
             if ($file_path !== '.' && $file_path !== '..') {
                 $file_path = str_replace('.php', '', $file_path);
@@ -42,13 +39,11 @@ class ApiRouter
                                 $endpoint = $attribute->newInstance();
                                 $endpoint->setController($file_path);
                                 $endpoint->setMethod($method->getName());
-                                
                                 foreach ($parameters as $parameter) {
                                     if (!Utils::isPrimitiveFromString($parameter->getType())) {
                                         $endpoint->setParameter($parameter->getName(), $parameter->getType());
                                     }
                                 }
-
                                 self::$endpoints[] = $endpoint;
                             }
                         }
@@ -64,7 +59,6 @@ class ApiRouter
 
     private static function load(string $urn): void
     {
-        // dégeu
         $test = explode('\\', dirname(__DIR__, 2));
         $test = end($test);
         $test = str_replace(' ', '', $test);
@@ -76,9 +70,10 @@ class ApiRouter
         } else {
             $params = null;
         }
+
         $endpointFound = null;
         foreach (self::$endpoints as $endpoint) {
-            if ($endpoint->getPath() === $urn ) {
+            if ($endpoint->getPath() === $urn) {
                 if ($endpoint->getRequestMethod() === $_SERVER['REQUEST_METHOD']) {
                     $endpointFound = $endpoint;
                 } else {

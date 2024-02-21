@@ -14,47 +14,47 @@ class User implements UserInterface
 
     public function __construct(){}
 
-    public function getId(): int
+    public final function getId(): int
     {
         return $this->id;
     }
 
-    public function getUsername(): string
+    public final function getUsername(): string
     {
         return $this->username;
     }
 
-    public function getPassword(): string
+    public final function getPassword(): string
     {
         return $this->password;
     }
 
-    public function getEmail(): string
+    public final function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getRoles(): array
+    public final function getRoles(): array
     {
         return $this->roles;
     }
 
-    public function setUsername(string $username): void
+    public final function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
-    public function setPassword(string $password): void
+    public final function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    public function setEmail(string $email): void
+    public final function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function setRoles(array $roles): void
+    public final function setRoles(array $roles): void
     {
         $this->roles = $roles;
     }

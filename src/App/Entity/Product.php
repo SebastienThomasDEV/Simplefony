@@ -10,9 +10,7 @@ class Product
     private string $description;
     private float $price;
 
-    public function __construct()
-    {
-    }
+    public function __construct(){}
 
     public final function getName(): string
     {
